@@ -110,7 +110,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--blue);outline-o
 .st b{font-size:26px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
 .st span{font-size:12px;color:var(--muted);line-height:1.2}
 .calnav{display:flex;justify-content:space-between;align-items:center;padding:12px 16px 4px}
-.calnav strong{font-size:17px;font-weight:600;text-transform:capitalize}
+.calnav strong{font-size:17px;font-weight:600}
 .calnav button{background:none;border:0;color:var(--blue);font-size:24px;width:40px;height:32px;cursor:pointer;line-height:1}
 .calnav button:disabled{color:var(--muted);opacity:.4;cursor:default}
 .cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px 0;padding:6px 8px 12px;text-align:center}
@@ -396,7 +396,7 @@ function streaks(){
 function renderCal(){
   const now=new Date(),tk=dkey(now);
   const first=new Date(viewY,viewM,1),days=new Date(viewY,viewM+1,0).getDate();
-  document.getElementById("monthLabel").textContent=first.toLocaleDateString("pt-BR",{month:"long",year:"numeric"});
+  {const ml=first.toLocaleDateString("pt-BR",{month:"long",year:"numeric"});document.getElementById("monthLabel").textContent=ml.charAt(0).toUpperCase()+ml.slice(1);}
   document.getElementById("nextM").disabled=(viewY>now.getFullYear())||(viewY===now.getFullYear()&&viewM>=now.getMonth());
   let h=WD.map(w=>`<div class="wh">${w}</div>`).join("");
   for(let i=0;i<first.getDay();i++)h+=`<div class="cd"></div>`;
