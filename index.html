@@ -16,16 +16,16 @@
 /* Layout: lista agrupada estilo iOS — título grande, anéis, calorias, refeições, água, calendário, ajustes; editor em folha cheia */
 :root{
   --bg:#f2f2f7; --card:#ffffff; --fg:#000000; --muted:#8a8a8e; --sep:rgba(60,60,67,.18);
-  --blue:#007aff; --green:#34c759; --orange:#ff9500; --red:#ff3b30; --fill:#e5e5ea; --on-accent:#ffffff;
+  --blue:#007aff; --green:#34c759; --orange:#ff9500; --red:#ff3b30; --purple:#af52de; --fill:#e5e5ea; --on-accent:#ffffff;
   --r1:#fa114f; --r2:#92e82a; --r3:#1eaaef; --ringbg:.18; --shadow:rgba(0,0,0,.15);
   --font:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Helvetica Neue",Roboto,"Segoe UI",system-ui,sans-serif;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#000000; --card:#1c1c1e; --fg:#ffffff; --muted:#8d8d93; --sep:rgba(84,84,88,.6);
-  --blue:#0a84ff; --green:#30d158; --orange:#ff9f0a; --red:#ff453a; --fill:#2c2c2e; --r3:#1eeaef; --shadow:rgba(0,0,0,.5); color-scheme:dark}}
+  --blue:#0a84ff; --green:#30d158; --orange:#ff9f0a; --red:#ff453a; --purple:#bf5af2; --fill:#2c2c2e; --r3:#1eeaef; --shadow:rgba(0,0,0,.5); color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#000000; --card:#1c1c1e; --fg:#ffffff; --muted:#8d8d93; --sep:rgba(84,84,88,.6);
-  --blue:#0a84ff; --green:#30d158; --orange:#ff9f0a; --red:#ff453a; --fill:#2c2c2e; --r3:#1eeaef; --shadow:rgba(0,0,0,.5); color-scheme:dark}
+  --blue:#0a84ff; --green:#30d158; --orange:#ff9f0a; --red:#ff453a; --purple:#bf5af2; --fill:#2c2c2e; --r3:#1eeaef; --shadow:rgba(0,0,0,.5); color-scheme:dark}
 :root[data-theme="light"]{color-scheme:light}
 *{box-sizing:border-box}
 html,body{background:var(--bg)}
@@ -174,6 +174,45 @@ button.setrow span:last-child{color:var(--muted)}
 .ed-total{font-size:15px;color:var(--muted);padding:0 16px;margin:0}
 .ed-total b{color:var(--fg);font-variant-numeric:tabular-nums}
 .ed-err{color:var(--red);font-size:15px;padding:0 16px;margin:0}
+/* peso */
+.wt-when{font-size:15px;color:var(--muted);white-space:nowrap}
+.wt-head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;padding:16px;border-bottom:.5px solid var(--sep)}
+.wt-big{font-size:40px;font-weight:700;letter-spacing:-.03em;font-variant-numeric:tabular-nums;color:var(--purple);line-height:1.05}
+.wt-big span{font-size:17px;font-weight:500;color:var(--muted);letter-spacing:0;margin-left:4px}
+.wt-bmi{text-align:right;display:flex;flex-direction:column;gap:2px}
+.wt-bmi b{font-size:17px;font-weight:600;font-variant-numeric:tabular-nums}
+.wt-bmi span{font-size:13px;color:var(--muted)}
+.st b small{font-size:13px;color:var(--muted);font-weight:500;letter-spacing:0}
+button.st{background:none;border:0;font:inherit;color:inherit;text-align:left;cursor:pointer}
+.st .cta{font-size:17px;font-weight:600;color:var(--blue);line-height:31px}
+.wt-chart{padding:12px 16px 10px;border-bottom:.5px solid var(--sep);display:flex;flex-direction:column;gap:10px}
+.wt-chart .seg{align-self:flex-start}
+#wtSvg{width:100%;height:170px;display:block;overflow:visible}
+#wtSvg text{fill:var(--muted);font-size:11px;font-family:var(--font)}
+#wtSvg .grid{stroke:var(--sep);stroke-width:1}
+#wtSvg .line{fill:none;stroke:var(--purple);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}
+#wtSvg .dot{fill:var(--purple)}
+#wtSvg .end{fill:var(--purple);stroke:var(--card);stroke-width:2.5}
+#wtSvg .goal{stroke:var(--green);stroke-width:1.5;stroke-dasharray:5 4}
+#wtSvg text.goal-l{fill:var(--green);font-weight:600}
+.wt-empty{font-size:15px;color:var(--muted);padding:28px 8px;text-align:center;margin:0}
+.wt-form{display:grid;grid-template-columns:1.25fr 1fr;gap:10px 8px;align-items:end;padding:12px 16px;border-bottom:.5px solid var(--sep)}
+.wt-form input[type=date]{min-height:38px;min-width:0;padding-right:6px}
+.btn-fill{border:0;background:var(--blue);color:var(--on-accent);font:inherit;font-weight:600;border-radius:8px;padding:0 14px;height:40px;cursor:pointer;flex:none}
+.wt-form .btn-fill,.wt-form .wt-msg{grid-column:1/-1}
+.wt-msg{width:100%;font-size:13px;margin:0;color:var(--red)}
+.wt-msg.ok{color:var(--green)}
+.wh-row{display:flex;align-items:center;gap:10px;padding:8px 8px 8px 16px;min-height:52px;position:relative}
+.wh-row + .wh-row::before{content:"";position:absolute;top:0;left:16px;right:0;height:.5px;background:var(--sep)}
+.wh-date{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+.wh-date small{font-size:13px;color:var(--muted)}
+.wh-diff{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.wh-kg{font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap;min-width:66px;text-align:right}
+.wh-row .del{align-self:center}
+.wh-confirm{border:0;background:var(--red);color:var(--on-accent);font:inherit;font-size:14px;font-weight:600;border-radius:8px;padding:7px 12px;cursor:pointer}
+.wh-more{display:block;width:100%;border:0;border-top:.5px solid var(--sep);background:none;font:inherit;color:var(--blue);padding:13px 16px;text-align:left;cursor:pointer}
+.unit-in{display:flex;align-items:center;gap:6px;color:var(--muted)}
+.unit-in input{width:84px;text-align:right;background:var(--fill);border:0;border-radius:8px;padding:8px 10px;font:inherit;color:var(--fg)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
@@ -234,6 +273,37 @@ button.setrow span:last-child{color:var(--muted)}
     </div>
   </section>
 
+  <section aria-label="Peso">
+    <div class="mealhead"><h2>Peso</h2><span class="wt-when" id="wtWhen"></span></div>
+    <div class="card">
+      <div class="wt-head">
+        <div class="wt-big" id="wtNow">—<span>kg</span></div>
+        <div class="wt-bmi" id="wtBmi" hidden></div>
+      </div>
+      <div class="stats">
+        <div class="st"><b id="wsStart">—</b><span id="wsStartL">início</span></div>
+        <div class="st"><b id="wsDiff">—</b><span>variação</span></div>
+        <button class="st" type="button" id="wsGoalBtn"><b id="wsGoal">—</b><span id="wsGoalL">meta de peso</span></button>
+      </div>
+      <div class="wt-chart">
+        <div class="seg" id="wtRange">
+          <button type="button" data-r="30">30 dias</button>
+          <button type="button" data-r="90">90 dias</button>
+          <button type="button" data-r="0">Tudo</button>
+        </div>
+        <svg id="wtSvg" role="img" aria-label="Gráfico da evolução do peso"></svg>
+        <p class="wt-empty" id="wtEmpty" hidden></p>
+      </div>
+      <form class="wt-form" id="wtForm" novalidate>
+        <div class="fld d"><label for="wtDate">Data</label><input type="date" id="wtDate"></div>
+        <div class="fld kg"><label for="wtKg">Peso (kg)</label><input id="wtKg" inputmode="decimal" placeholder="Ex.: 78,5" autocomplete="off"></div>
+        <button class="btn-fill" type="submit" id="wtSave">Salvar</button>
+        <p class="wt-msg" id="wtMsg" hidden></p>
+      </form>
+      <div id="wtHist"></div>
+    </div>
+  </section>
+
   <section aria-label="Calendário da dieta">
     <div class="mealhead"><h2>Calendário</h2></div>
     <div class="card">
@@ -267,6 +337,14 @@ button.setrow span:last-child{color:var(--muted)}
           <button type="button" data-v="light">Claro</button>
           <button type="button" data-v="dark">Escuro</button>
         </div>
+      </div>
+      <div class="setrow">
+        <label for="goalIn">Meta de peso</label>
+        <div class="unit-in"><input id="goalIn" inputmode="decimal" placeholder="—" autocomplete="off"><span>kg</span></div>
+      </div>
+      <div class="setrow">
+        <label for="hIn">Altura (para o IMC)</label>
+        <div class="unit-in"><input id="hIn" inputmode="numeric" placeholder="—" autocomplete="off"><span>cm</span></div>
       </div>
       <button class="setrow" id="editBtn2" type="button"><span>Editar dieta</span><span>›</span></button>
     </div>
@@ -414,7 +492,7 @@ function renderCal(){
   document.getElementById("stBest").textContent=s.best;
   const k=selKey||tk,rec=db[k]||{n:0,t:totalItems(),k:0,w:0},dt=new Date(k+"T12:00:00");
   const label=k===tk?"Hoje":dt.toLocaleDateString("pt-BR",{weekday:"short",day:"numeric",month:"short"});
-  document.getElementById("detail").innerHTML=`<span>${label}</span><b>${rec.n||0}/${rec.t||0} alimentos · ${nf(rec.k||0)} kcal · ${((rec.w||0)*0.25).toLocaleString("pt-BR")} L</b>`;
+  document.getElementById("detail").innerHTML=`<span>${label}</span><b>${rec.n||0}/${rec.t||0} alimentos · ${nf(rec.k||0)} kcal · ${((rec.w||0)*0.25).toLocaleString("pt-BR")} L${wt.e[k]!=null?` · ${kgf(wt.e[k])} kg`:""}</b>`;
 }
 
 function render(){
@@ -446,6 +524,7 @@ function render(){
   document.getElementById("kBar").style.width=(kp?Math.min(100,d.k/kp*100):0)+"%";
   document.getElementById("kDone").hidden=!isFull(d);
   renderCal();
+  renderWeight();
 }
 
 // editor
@@ -510,6 +589,118 @@ document.getElementById("edSave").onclick=()=>{
 };
 document.getElementById("editBtn").onclick=openEditor;
 document.getElementById("editBtn2").onclick=openEditor;
+
+// peso
+const WKEY="dieta-tiago-peso";
+let wt={e:{},goal:null,h:null};
+try{wt=Object.assign(wt,JSON.parse(localStorage.getItem(WKEY))||{});wt.e=wt.e||{}}catch(e){}
+const saveW=()=>{try{localStorage.setItem(WKEY,JSON.stringify(wt))}catch(e){}};
+const kgf=n=>(+n).toLocaleString("pt-BR",{minimumFractionDigits:1,maximumFractionDigits:1});
+const parseNum=s=>{const v=parseFloat(String(s).replace(",",".").trim());return isFinite(v)?v:NaN};
+const fmtD=(k,o)=>new Date(k+"T12:00:00").toLocaleDateString("pt-BR",o);
+const wEntries=()=>Object.keys(wt.e).sort().map(d=>({d,kg:wt.e[d]}));
+const bmiCat=b=>b<18.5?"Abaixo do peso":b<25?"Peso normal":b<30?"Sobrepeso":"Obesidade";
+let wRange=30,wShowAll=false,wPendingDel=null;
+const wDate=document.getElementById("wtDate"),wKg=document.getElementById("wtKg"),wMsg=document.getElementById("wtMsg");
+const goalIn=document.getElementById("goalIn"),hIn=document.getElementById("hIn");
+
+function renderWeight(){
+  const E=wEntries(),first=E[0],last=E[E.length-1],tk=dkey(new Date());
+  document.getElementById("wtNow").innerHTML=`${last?kgf(last.kg):"—"}<span>kg</span>`;
+  document.getElementById("wtWhen").textContent=!last?"Nenhum registro":last.d===tk?"Registrado hoje":`Último: ${fmtD(last.d,{day:"numeric",month:"short"})}`;
+  const bmi=document.getElementById("wtBmi");
+  if(last&&wt.h){const b=last.kg/Math.pow(wt.h/100,2);bmi.hidden=false;bmi.innerHTML=`<b>IMC ${b.toLocaleString("pt-BR",{minimumFractionDigits:1,maximumFractionDigits:1})}</b><span>${bmiCat(b)}</span>`}else bmi.hidden=true;
+  document.getElementById("wsStart").innerHTML=first?`${kgf(first.kg)}<small> kg</small>`:"—";
+  document.getElementById("wsStartL").textContent=first?`início · ${fmtD(first.d,{day:"numeric",month:"short"})}`:"início";
+  const dv=document.getElementById("wsDiff");dv.style.color="";
+  if(E.length>1){const diff=Math.round((last.kg-first.kg)*10)/10;
+    dv.innerHTML=`${diff>0?"+":diff<0?"−":""}${kgf(Math.abs(diff))}<small> kg</small>`;
+    if(wt.goal!=null&&diff!==0&&wt.goal!==first.kg)dv.style.color=Math.sign(wt.goal-first.kg)===Math.sign(diff)?"var(--green)":"var(--orange)";}
+  else dv.textContent="—";
+  const g=document.getElementById("wsGoal"),gl=document.getElementById("wsGoalL");
+  if(wt.goal!=null){g.innerHTML=`${kgf(wt.goal)}<small> kg</small>`;
+    const left=last?Math.round(Math.abs(wt.goal-last.kg)*10)/10:null;
+    gl.textContent=left==null?"meta":left===0?"meta atingida":`faltam ${kgf(left)} kg`}
+  else{g.innerHTML=`<span class="cta">Definir</span>`;gl.textContent="meta de peso"}
+  wDate.max=tk;if(!wDate.value||wDate.value>tk)wDate.value=tk;
+  syncForm();
+  document.querySelectorAll("#wtRange button").forEach(b=>b.classList.toggle("on",+b.dataset.r===wRange));
+  drawChart(E);renderHist(E);
+  if(document.activeElement!==goalIn)goalIn.value=wt.goal!=null?kgf(wt.goal):"";
+  if(document.activeElement!==hIn)hIn.value=wt.h||"";
+}
+function syncForm(){
+  const ex=wt.e[wDate.value];
+  document.getElementById("wtSave").textContent=ex!=null?"Atualizar":"Salvar";
+  wKg.placeholder=ex!=null?kgf(ex):"Ex.: 78,5";
+}
+function drawChart(E){
+  const svg=document.getElementById("wtSvg"),empty=document.getElementById("wtEmpty");
+  let pts=E.map(e=>({t:new Date(e.d+"T12:00:00").getTime(),kg:e.kg,d:e.d}));
+  if(wRange){const from=new Date();from.setHours(0,0,0,0);from.setDate(from.getDate()-wRange+1);pts=pts.filter(p=>p.t>=from.getTime())}
+  if(pts.length<2){
+    svg.innerHTML="";svg.style.display="none";empty.hidden=false;
+    empty.textContent=!E.length?"Registre seu peso abaixo para começar o gráfico.":E.length===1?"Registre mais um dia para ver a evolução.":"Poucos registros neste período. Escolha um período maior.";
+    return}
+  svg.style.display="";empty.hidden=true;
+  const W=Math.max(220,svg.clientWidth||320),H=170,pl=34,pr=8,pt=10,pb=22;
+  svg.setAttribute("viewBox",`0 0 ${W} ${H}`);
+  let lo=Math.min(...pts.map(p=>p.kg)),hi=Math.max(...pts.map(p=>p.kg));
+  if(hi-lo<1){const m=(hi+lo)/2;lo=m-0.5;hi=m+0.5}
+  const span=hi-lo,step=[0.5,1,2,5,10,20,50].find(s=>span/s<=4)||50;
+  lo=Math.floor((lo-span*0.1)/step)*step;hi=Math.ceil((hi+span*0.1)/step)*step;
+  const t0=pts[0].t,ts=Math.max(pts[pts.length-1].t-t0,864e5);
+  const X=t=>pl+(t-t0)/ts*(W-pl-pr),Y=v=>pt+(hi-v)/(hi-lo)*(H-pt-pb);
+  let s=`<defs><linearGradient id="wtFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--purple);stop-opacity:.28"/><stop offset="1" style="stop-color:var(--purple);stop-opacity:0"/></linearGradient></defs>`;
+  for(let v=lo;v<=hi+1e-9;v+=step){const y=Y(v).toFixed(1);s+=`<line class="grid" x1="${pl}" x2="${W-pr}" y1="${y}" y2="${y}"/><text x="${pl-6}" y="${(+y+3.5).toFixed(1)}" text-anchor="end">${step<1?kgf(v):Math.round(v)}</text>`}
+  if(wt.goal!=null&&wt.goal>=lo&&wt.goal<=hi){const y=Y(wt.goal).toFixed(1);s+=`<line class="goal" x1="${pl}" x2="${W-pr}" y1="${y}" y2="${y}"/><text class="goal-l" x="${W-pr}" y="${(+y-5).toFixed(1)}" text-anchor="end">meta</text>`}
+  const line=pts.map((p,i)=>`${i?"L":"M"}${X(p.t).toFixed(1)} ${Y(p.kg).toFixed(1)}`).join(" ");
+  s+=`<path d="${line} L${X(pts[pts.length-1].t).toFixed(1)} ${H-pb} L${X(t0).toFixed(1)} ${H-pb} Z" fill="url(#wtFill)"/><path class="line" d="${line}"/>`;
+  if(pts.length<=40)pts.slice(0,-1).forEach(p=>{s+=`<circle class="dot" cx="${X(p.t).toFixed(1)}" cy="${Y(p.kg).toFixed(1)}" r="2.5"/>`});
+  const lp=pts[pts.length-1];s+=`<circle class="end" cx="${X(lp.t).toFixed(1)}" cy="${Y(lp.kg).toFixed(1)}" r="5"/>`;
+  const fd=d=>fmtD(d,{day:"numeric",month:"short"}).replace(" de "," ").replace(".","");
+  s+=`<text x="${pl}" y="${H-5}">${fd(pts[0].d)}</text><text x="${W-pr}" y="${H-5}" text-anchor="end">${fd(lp.d)}</text>`;
+  svg.innerHTML=s;
+}
+function renderHist(E){
+  const el=document.getElementById("wtHist");
+  const items=E.map((e,i)=>({...e,diff:i?Math.round((e.kg-E[i-1].kg)*10)/10:null})).reverse();
+  const show=wShowAll?items:items.slice(0,5),y=new Date().getFullYear();
+  el.innerHTML=show.map(e=>{const dt=new Date(e.d+"T12:00:00");
+    const label=fmtD(e.d,dt.getFullYear()===y?{day:"numeric",month:"short"}:{day:"numeric",month:"short",year:"numeric"});
+    const diff=e.diff==null?"":e.diff===0?"±0":`${e.diff>0?"+":"−"}${kgf(Math.abs(e.diff))}`;
+    const act=wPendingDel===e.d?`<button class="wh-confirm" type="button" data-del="${e.d}">Apagar</button>`:`<button class="del" type="button" data-ask="${e.d}" aria-label="Apagar registro de ${label}">${trash}</button>`;
+    return `<div class="wh-row"><div class="wh-date">${label}<small>${dt.toLocaleDateString("pt-BR",{weekday:"long"})}</small></div><span class="wh-diff">${diff}</span><span class="wh-kg">${kgf(e.kg)} kg</span>${act}</div>`}).join("")
+    +(items.length>5?`<button class="wh-more" type="button" data-more="1">${wShowAll?"Mostrar menos":`Ver todos os registros (${items.length})`}</button>`:"");
+}
+document.getElementById("wtHist").addEventListener("click",e=>{
+  const b=e.target.closest("button");if(!b)return;
+  if(b.dataset.ask){wPendingDel=b.dataset.ask;renderWeight();return}
+  if(b.dataset.del){delete wt.e[b.dataset.del];wPendingDel=null;saveW();render();return}
+  if(b.dataset.more){wShowAll=!wShowAll;renderWeight()}
+});
+document.getElementById("wtRange").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;wRange=+b.dataset.r;renderWeight()});
+wDate.addEventListener("change",()=>{wMsg.hidden=true;syncForm()});
+let wMsgTimer;
+document.getElementById("wtForm").addEventListener("submit",e=>{
+  e.preventDefault();clearTimeout(wMsgTimer);
+  const kg=parseNum(wKg.value),d=wDate.value||dkey(new Date());
+  const fail=t=>{wMsg.hidden=false;wMsg.classList.remove("ok");wMsg.textContent=t};
+  if(!(kg>=20&&kg<=400))return fail("Digite um peso entre 20 e 400 kg, por exemplo 78,5.");
+  if(d>dkey(new Date()))return fail("Escolha uma data até hoje.");
+  const upd=wt.e[d]!=null;wt.e[d]=Math.round(kg*10)/10;saveW();wKg.value="";wPendingDel=null;render();
+  wMsg.hidden=false;wMsg.classList.add("ok");
+  wMsg.textContent=`${upd?"Peso atualizado":"Peso salvo"}: ${kgf(wt.e[d])} kg em ${fmtD(d,{day:"numeric",month:"long"})}.`;
+  wMsgTimer=setTimeout(()=>{wMsg.hidden=true},3500);
+});
+document.getElementById("wsGoalBtn").onclick=()=>{goalIn.scrollIntoView({behavior:"smooth",block:"center"});setTimeout(()=>goalIn.focus(),350)};
+goalIn.addEventListener("change",()=>{const v=goalIn.value.trim();
+  if(!v)wt.goal=null;else{const n=parseNum(v);if(n>=20&&n<=400)wt.goal=Math.round(n*10)/10}
+  goalIn.value=wt.goal!=null?kgf(wt.goal):"";saveW();render()});
+hIn.addEventListener("change",()=>{const v=hIn.value.trim();
+  if(!v)wt.h=null;else{let n=parseNum(v);if(n>0&&n<3)n*=100;if(n>=100&&n<=250)wt.h=Math.round(n)}
+  hIn.value=wt.h||"";saveW();render()});
+let wResize;addEventListener("resize",()=>{clearTimeout(wResize);wResize=setTimeout(()=>drawChart(wEntries()),150)});
 
 applyTheme();buildMeals();commit();
 setInterval(()=>{if(dkey(new Date())!==today)render()},60000);
